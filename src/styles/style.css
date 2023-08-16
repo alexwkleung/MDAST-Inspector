@@ -1,0 +1,42 @@
+body {
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#main-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.main-heading {
+    text-align: center;
+}
+
+#github-link-container {
+    text-align: center;
+}
+
+#github-link {
+    text-decoration: none;
+}
+
+#editor-container-left {
+    position: fixed;
+    width: calc(100% - 50%);
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+#tree-preview-container-right {
+    position: fixed;
+    width: calc(100% - 50%);
+    height: calc(100vh - 100px);
+    margin-left: 50%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.cm-editor {
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+}

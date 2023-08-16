@@ -1,0 +1,42 @@
+{
+  "name": "markdown-mdast-inspector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "eslint": "eslint .",
+    "eslint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexwkleung/Markdown-MDAST-Inspector.git"
+  },
+  "author": "alexwkleung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexwkleung/Markdown-MDAST-Inspector/issues"
+  },
+  "homepage": "https://github.com/alexwkleung/Markdown-MDAST-Inspector#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.10",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.1"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.9.0",
+    "@codemirror/commands": "^6.2.4",
+    "@codemirror/lang-markdown": "^6.2.0",
+    "@codemirror/language": "^6.8.0",
+    "@codemirror/language-data": "^6.3.1",
+    "@codemirror/state": "^6.2.1",
+    "@codemirror/view": "^6.16.0",
+    "mdast-util-from-markdown": "^2.0.0"
+  }
+}
