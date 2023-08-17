@@ -18,5 +18,5 @@ export function editorListener(): void {
             //create tree preview 
             createTreePreview();
         }
-    }, 1000));
+    }, 500));
 }

@@ -25,7 +25,7 @@ export function createInitDOM(): void {
     githubLinkAnchor.setAttribute("href", "https://github.com/alexwkleung/Markdown-MDAST-Inspector");
     
     //github link text node
-    const githubLinkTextNode: Text = document.createTextNode("GitHub Repo");
+    const githubLinkTextNode: Text = document.createTextNode("GitHub");
     githubLinkAnchor.appendChild(githubLinkTextNode);
 
     githubLinkContainer.appendChild(githubLinkAnchor);
