@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('./fonts/Roboto-Regular.ttf');
+}
+
+* {
+    font-family: 'Roboto-Regular';
+}
+
 body {
     margin: 0 auto;
     overflow: hidden;
@@ -6,6 +15,11 @@ body {
 #main-container {
     width: 100vw;
     height: 100vh;
+}
+
+#main-top {
+    border: 1px solid rgb(202, 201, 201);
+    background-color: rgb(247, 247, 247);
 }
 
 .main-heading {
@@ -18,7 +32,8 @@ body {
 
 #github-link {
     text-decoration: none;
-    color: blue;
+    color: rgb(90, 45, 182);
+    font-size: 18px;
 }
 
 #editor-container-left {
@@ -26,6 +41,8 @@ body {
     width: calc(100% - 50%);
     overflow-y: scroll;
     overflow-x: scroll;
+    font-size: 18px;
+    border: 1px solid rgb(202, 201, 201);
 }
 
 #tree-preview-container-right {
@@ -35,9 +52,15 @@ body {
     margin-left: 50%;
     overflow-y: scroll;
     overflow-x: scroll;
+    font-size: 18px;
+    border: 1px solid rgb(202, 201, 201);
 }
 
 .cm-editor {
     height: calc(100vh - 100px);
     overflow-y: scroll;
+}
+
+#tree-pre {
+    padding-left: 15px;
 }

@@ -7,17 +7,21 @@ export function createInitDOM(): void {
     mainContainer.setAttribute("id", "main-container");
     document.body.insertBefore(mainContainer, document.body.firstChild);
 
+    const mainTop: HTMLDivElement = document.createElement('div');
+    mainTop.setAttribute("id", "main-top");
+    mainContainer.appendChild(mainTop);
+
     //main title
     const mainTitle: HTMLHeadElement = document.createElement('h1');
     mainTitle.setAttribute("class", "main-heading");
     const mainTitleTextNode: Text = document.createTextNode("Markdown MDAST Inspector");
     mainTitle.appendChild(mainTitleTextNode);
-    mainContainer.appendChild(mainTitle);
+    mainTop.appendChild(mainTitle);
 
     //github link container
     const githubLinkContainer: HTMLDivElement = document.createElement('div');
     githubLinkContainer.setAttribute("id", "github-link-container");
-    mainContainer.appendChild(githubLinkContainer);
+    mainTop.appendChild(githubLinkContainer);
 
     //github link anchor
     const githubLinkAnchor: HTMLAnchorElement = document.createElement('a');
@@ -25,7 +29,7 @@ export function createInitDOM(): void {
     githubLinkAnchor.setAttribute("href", "https://github.com/alexwkleung/Markdown-MDAST-Inspector");
     
     //github link text node
-    const githubLinkTextNode: Text = document.createTextNode("GitHub");
+    const githubLinkTextNode: Text = document.createTextNode("GitHub Repo");
     githubLinkAnchor.appendChild(githubLinkTextNode);
 
     githubLinkContainer.appendChild(githubLinkAnchor);
