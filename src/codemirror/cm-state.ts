@@ -1,9 +1,10 @@
 import { EditorState } from '@codemirror/state'
-import { keymap, rectangularSelection, drawSelection, lineNumbers } from '@codemirror/view'
+import { keymap, rectangularSelection, drawSelection, lineNumbers, highlightActiveLine } from '@codemirror/view'
 import { defaultKeymap, history, historyKeymap, standardKeymap, indentWithTab } from '@codemirror/commands'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
 import { closeBrackets } from '@codemirror/autocomplete'
+import { basicLight } from './theme/basic-light'
 
 export class CMEditorState {
     /**
@@ -30,7 +31,9 @@ export class CMEditorState {
                     indentWithTab
                 ]),
                 closeBrackets(),
-                lineNumbers()
+                lineNumbers(),
+                highlightActiveLine(),
+                basicLight
             ]
         })
 
