@@ -2,7 +2,7 @@
 
 This is a simple educational tool to see how Markdown is presented in the Markdown Abstract Syntax Tree (mdast) format.
 
-# Installation
+# Setup
 
 Clone the repository
 
@@ -21,8 +21,6 @@ Run development server
 ```bash
 npm run dev
 ```
-
-# Usage
 
 # License
 
