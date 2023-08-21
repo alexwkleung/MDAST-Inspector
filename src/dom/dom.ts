@@ -50,7 +50,7 @@ export function createInitDOM(): void {
     treePreviewContainer.appendChild(treePreviewContentContainer);
 }
 
-export function createTreePreview(): void {
+export function createDefaultTreePreview(): void {
     //tree preview content
     const treePreviewContent: HTMLDivElement = document.createElement('div');
     treePreviewContent.setAttribute("id", "tree-preview-content");
@@ -69,4 +69,39 @@ export function createTreePreview(): void {
     //tree text node
     const treeTextNode: Text = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
     treeCode.appendChild(treeTextNode);
+
+    //document.createTextNode(JSON.stringify(JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).children, null, 2));
+    //document.createTextNode(JSON.stringify(JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).position, null, 2));
+}
+
+export function createTreePreviewPropertyCheckboxes(): void {
+    //children label
+    const childrenLabel: HTMLLabelElement = document.createElement('label');
+    childrenLabel.setAttribute("for", "children-input");
+    childrenLabel.setAttribute("id", "children-label");
+    childrenLabel.textContent = "Show children nodes";
+    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(childrenLabel, (document.getElementById('tree-preview-container-right') as HTMLElement).firstChild);
+
+    //children input 
+    const childrenInput: HTMLInputElement = document.createElement('input');
+    childrenInput.setAttribute("type", "checkbox");
+    childrenInput.setAttribute("id", "children-input");
+    childrenInput.setAttribute("name", "children-checkbox");
+    childrenInput.setAttribute("not-checked", "");
+    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(childrenInput, childrenLabel);
+
+    //position label
+    const positionLabel: HTMLLabelElement = document.createElement('label');
+    positionLabel.setAttribute("for", "position-input");
+    positionLabel.setAttribute("id", "position-label");
+    positionLabel.textContent = "Show position of children nodes";
+    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionLabel, (document.getElementById('tree-preview-content-container') as HTMLElement));
+
+    //position input
+    const positionInput: HTMLInputElement = document.createElement('input');
+    positionInput.setAttribute("type", "checkbox");
+    positionInput.setAttribute("id", "position-input");
+    positionInput.setAttribute("name", "position-checkbox");
+    positionInput.setAttribute("not-checked", "");
+    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionInput, positionLabel);
 }

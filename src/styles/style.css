@@ -54,6 +54,7 @@ body {
     overflow-x: scroll;
     font-size: 20px;
     border: 1px solid rgb(202, 201, 201);
+    padding-top: 20px;
 }
 
 .cm-editor {
@@ -63,4 +64,14 @@ body {
 
 #tree-pre {
     padding-left: 15px;
+}
+
+input {
+    margin-left: 15px;
+}
+
+label {
+    user-select: none;
+    padding-left: 5px;
+    font-size: 17px;
 }
