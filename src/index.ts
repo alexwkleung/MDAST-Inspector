@@ -15,7 +15,7 @@ function main(): void {
     createTreePreviewPropertyCheckboxes();
 
     //create default tree preview
-    createDefaultTreePreview();
+    createDefaultTreePreview(true, false, false);
 
     //editor listener
     editorListener();

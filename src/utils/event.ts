@@ -10,7 +10,7 @@ export function editorListener(): void {
 
         if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && (document.getElementById('tree-preview-content') === null)) {    
             //create tree preview if it doesn't exist
-            createDefaultTreePreview();
+            createDefaultTreePreview(true, false, false);
 
             //console.log(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
         } else if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && (document.getElementById('tree-preview-content') !== null)) {
@@ -18,10 +18,8 @@ export function editorListener(): void {
             (document.getElementById('tree-preview-content-container') as HTMLElement).removeChild((document.getElementById('tree-preview-content') as HTMLElement));
 
             //create default tree preview 
-            createDefaultTreePreview();
+            createDefaultTreePreview(true, false, false);
         }
-
-        //console.log(JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).children);
     }, 500));
 }
 
@@ -36,6 +34,11 @@ export function treePreviewPropertyCheckboxListener(): void {
 
                 //remove not-checked attribute
                 el.removeAttribute('not-checked');
+
+                //show default tree preview 
+                if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && ((document.getElementById('tree-preview-content') as HTMLElement) === null)) {
+                    createDefaultTreePreview(true, false, false);
+                }
             } else if(el.hasAttribute('checked')) {
                 el.setAttribute("not-checked", "");
 

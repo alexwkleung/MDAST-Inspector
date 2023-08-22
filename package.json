@@ -39,6 +39,7 @@
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.16.0",
     "@lezer/highlight": "^1.1.6",
-    "mdast-util-from-markdown": "^2.0.0"
+    "mdast-util-from-markdown": "^2.0.0",
+    "unist-util-visit": "^5.0.0"
   }
 }

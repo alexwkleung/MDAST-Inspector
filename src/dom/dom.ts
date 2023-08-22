@@ -1,5 +1,6 @@
 import { mdastFromMarkdown } from "../utils/parser"
 import { CMEditorView } from "../codemirror/cm-view"
+import { visit } from 'unist-util-visit'
 
 export function createInitDOM(): void {
     //main container
@@ -50,7 +51,14 @@ export function createInitDOM(): void {
     treePreviewContainer.appendChild(treePreviewContentContainer);
 }
 
-export function createDefaultTreePreview(): void {
+/**
+ * Create default tree preview 
+ * 
+ * @param showDefaultTree Option to show default tree only
+ * @param showChildren Option to show children nodes only
+ * @param showPosition Option to show position of children nodes only
+ */
+export function createDefaultTreePreview(showDefaultTree: boolean, showChildren: boolean, showPosition: boolean): void {
     //tree preview content
     const treePreviewContent: HTMLDivElement = document.createElement('div');
     treePreviewContent.setAttribute("id", "tree-preview-content");
@@ -67,11 +75,41 @@ export function createDefaultTreePreview(): void {
     treePre.appendChild(treeCode);
     
     //tree text node
-    const treeTextNode: Text = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
-    treeCode.appendChild(treeTextNode);
+    let treeTextNode: Text;
 
-    //document.createTextNode(JSON.stringify(JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).children, null, 2));
-    //document.createTextNode(JSON.stringify(JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).position, null, 2));
+    //when showDefault is true only
+    if(showDefaultTree && !showChildren && !showPosition) {
+        treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
+        treeCode.appendChild(treeTextNode);
+    //when showChildren is true only
+    } else if(!showDefaultTree && showChildren && !showPosition) {
+        treeTextNode = document.createTextNode(JSON.stringify((JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).children), null, 2));
+        treeCode.appendChild(treeTextNode);
+    //when showPosition is true only
+    } else if(!showDefaultTree && !showChildren && showPosition) {
+        treeTextNode = document.createTextNode(JSON.stringify((JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).position), null, 2));
+        treeCode.appendChild(treeTextNode);
+    //when showDefaultTree, showChildren, and showPosition is true
+    } else if(showDefaultTree && showChildren && showPosition) {
+        //assign default parsed mdast string 
+        treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
+        treeCode.appendChild(treeTextNode);
+    //when showDefaultTree, showChildren, and showPosition are false
+    } else if(!showDefaultTree && !showChildren && !showPosition) {
+        //assign empty string
+        treeTextNode = document.createTextNode("");
+        treeCode.appendChild(treeTextNode);
+    //if no argument combination matches the above
+    } else {
+        //assign default parsed mdast string
+        treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
+        treeCode.appendChild(treeTextNode);
+    }
+
+    //temp (remove later)
+    visit(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), (node, index, parent) => {
+        console.log([node ? node.value : index, parent ? parent.type : index]);
+    })
 }
 
 export function createTreePreviewPropertyCheckboxes(): void {
