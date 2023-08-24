@@ -34,17 +34,32 @@ const editorDebounce = debounce(() => {
     //console.log(CMEditorView.editorView.state.doc.toString());
     //console.log(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()));
 
-    if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && (document.getElementById('tree-preview-content') === null)) {    
-        //create tree preview if it doesn't exist
-        createDefaultTreePreview(true, false, false);
+    if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && (document.getElementById('tree-preview-content') === null)) {   
+        //if children input is checked
+        if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
+            //create children tree
+            createDefaultTreePreview(false, true, false);
+        //if position input is checked
+        } else if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
+            //create position tree
+            createDefaultTreePreview(false, false, true);
+        //else just create default tree
+        } else {
+            createDefaultTreePreview(true, false, false);
+        }
 
         //console.log(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
     } else if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && (document.getElementById('tree-preview-content') !== null)) {
         //remove tree preview content if it exists
         (document.getElementById('tree-preview-content-container') as HTMLElement).removeChild((document.getElementById('tree-preview-content') as HTMLElement));
 
-        //create default tree preview 
-        createDefaultTreePreview(true, false, false);
+        if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
+            createDefaultTreePreview(false, true, false);
+        } else if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
+            createDefaultTreePreview(false, false, true);
+        } else {
+            createDefaultTreePreview(true, false, false);
+        }
     }
 }, 500);
 
@@ -60,7 +75,7 @@ export function treePreviewPropertyCheckboxListener(): void {
             if(el.hasAttribute('not-checked')) {
                 //set checked attribute
                 el.setAttribute("checked", "");
-
+                
                 //remove not-checked attribute
                 el.removeAttribute('not-checked');
 
@@ -74,14 +89,59 @@ export function treePreviewPropertyCheckboxListener(): void {
                 el.removeAttribute("checked");
             }
 
-            //temp (remove later)
-            evt.dispose(
-                (document.getElementById('editor-container-left') as HTMLElement), 
-                "keyup", 
-                editorDebounce, 
-                undefined, 
-                "disposed editor listener"
-            );
+            if(el.classList.contains('children-input-target')) {
+                console.log("children");
+
+                if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
+                    el.setAttribute("not-checked", "");
+                    el.removeAttribute('checked');
+                }
+
+                //dispose editor listener
+                evt.dispose(
+                    (document.getElementById('editor-container-left') as HTMLElement), 
+                    "keyup", 
+                    editorDebounce, 
+                    undefined, 
+                    "disposed editor listener"
+                );
+
+                //create children tree
+                createDefaultTreePreview(false, true, false);
+
+                //invoke editor listener after dispose
+                editorListener();
+
+                //if children and position input are not checked
+                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("not-checked")) {
+                    //invoke editor listener
+                    editorListener();
+                }
+            } else if(el.classList.contains('position-input-target')) {
+                console.log("position");
+
+                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
+                    el.setAttribute("not-checked", "");
+                    el.removeAttribute('checked');
+                }
+
+                evt.dispose(
+                    (document.getElementById('editor-container-left') as HTMLElement), 
+                    "keyup", 
+                    editorDebounce, 
+                    undefined, 
+                    "disposed editor listener"
+                );  
+
+                //create position tree
+                createDefaultTreePreview(false, false, true);
+
+                editorListener();
+
+                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("not-checked")) {
+                    editorListener();
+                }
+            }
         })
     });
 }

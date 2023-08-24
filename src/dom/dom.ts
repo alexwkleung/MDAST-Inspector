@@ -59,6 +59,12 @@ export function createInitDOM(): void {
  * @param showPosition Option to show position of children nodes only
  */
 export function createDefaultTreePreview(showDefaultTree: boolean, showChildren: boolean, showPosition: boolean): void {
+    //check if tree preview node exists
+    if((document.getElementById('tree-preview-content') as HTMLElement)) {
+        //remove node
+        (document.getElementById('tree-preview-content') as HTMLElement).remove();
+    }
+
     //tree preview content
     const treePreviewContent: HTMLDivElement = document.createElement('div');
     treePreviewContent.setAttribute("id", "tree-preview-content");
@@ -124,6 +130,7 @@ export function createTreePreviewPropertyCheckboxes(): void {
     const childrenInput: HTMLInputElement = document.createElement('input');
     childrenInput.setAttribute("type", "checkbox");
     childrenInput.setAttribute("id", "children-input");
+    childrenInput.setAttribute("class", "children-input-target");
     childrenInput.setAttribute("name", "children-checkbox");
     childrenInput.setAttribute("not-checked", "");
     (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(childrenInput, childrenLabel);
@@ -139,6 +146,7 @@ export function createTreePreviewPropertyCheckboxes(): void {
     const positionInput: HTMLInputElement = document.createElement('input');
     positionInput.setAttribute("type", "checkbox");
     positionInput.setAttribute("id", "position-input");
+    positionInput.setAttribute("class", "position-input-target");
     positionInput.setAttribute("name", "position-checkbox");
     positionInput.setAttribute("not-checked", "");
     (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionInput, positionLabel);
