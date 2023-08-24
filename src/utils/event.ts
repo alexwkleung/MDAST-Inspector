@@ -1,25 +1,28 @@
 import { debounce } from "./debounce"
 import { createDefaultTreePreview } from "../dom/dom"
-import { CMEditorView } from "../codemirror/cm-view"
-import { mdastFromMarkdown } from "./parser"
 
-interface IEvent<T extends HTMLElement, Z extends string, K, X extends boolean> {
-    dispose(el: T, type: Z, fn: () => K, capture?: X): void;
+interface IEvent<T extends HTMLElement, Z extends string, K, X extends boolean | undefined, Y extends string | undefined> {
+    dispose(el: T, type: Z, fn: () => K, capture?: X, log?: Y): void;
 }
 
-class Event implements IEvent<HTMLElement, string, any, boolean> {
+class Event implements IEvent<HTMLElement, string, any, boolean | undefined, string | undefined> {
     /**
-     * Event dispose 
+     * Dispose event listener 
      * 
      * @param el Element to remove event listener from
      * @param type Event type 
      * @param fn Reference function corresponding to event listener
-     * @param capture Optional - Default is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
+     * @param capture Optional - Default value is `false`. If `true`, it specifies that the event listener being removed is a capturing listener
+     * @param log Optional - Print a message to console
      */
-    public dispose(el: HTMLElement, type: string, fn: () => any, capture?: boolean): void {
+    public dispose(el: HTMLElement, type: string, fn: () => any, capture?: boolean | undefined, log?: string | undefined): void {
         el.removeEventListener(type, fn, capture);
 
-        console.log("Removed event listener");
+        if(log) {
+            console.log(log);
+        } else {
+            return;
+        }
     }
 }
 
@@ -72,7 +75,13 @@ export function treePreviewPropertyCheckboxListener(): void {
             }
 
             //temp (remove later)
-            evt.dispose((document.getElementById('editor-container-left') as HTMLElement), "keyup", editorDebounce);
+            evt.dispose(
+                (document.getElementById('editor-container-left') as HTMLElement), 
+                "keyup", 
+                editorDebounce, 
+                undefined, 
+                "disposed editor listener"
+            );
         })
     });
 }
