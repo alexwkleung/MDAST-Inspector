@@ -1,4 +1,4 @@
-<h1 align="center">🔍 Markdown MDAST Inspector </h1>
+<h1 align="center">🔍 MDAST Inspector </h1>
 
 This is a simple educational tool to see how Markdown is presented in the mdast (Markdown Abstract Syntax Tree) format.
 

@@ -1,5 +1,5 @@
 {
-  "name": "markdown-mdast-inspector",
+  "name": "mdast-inspector",
   "version": "0.1.0",
   "description": "Inspect the mdast (Markdown Abstract Syntax Tree) of written Markdown content",
   "main": "index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexwkleung/Markdown-MDAST-Inspector.git"
+    "url": "git+https://github.com/alexwkleung/MDAST-Inspector.git"
   },
   "author": "alexwkleung",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexwkleung/Markdown-MDAST-Inspector/issues"
+    "url": "https://github.com/alexwkleung/MDAST-Inspector/issues"
   },
-  "homepage": "https://github.com/alexwkleung/Markdown-MDAST-Inspector#readme",
+  "homepage": "https://github.com/alexwkleung/MDAST-Inspector#readme",
   "devDependencies": {
     "@types/node": "^20.4.10",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
