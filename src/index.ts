@@ -1,6 +1,6 @@
-import { createInitDOM, createDefaultTreePreview, createTreePreviewPropertyCheckboxes } from './dom/dom'
+import { createInitDOM, createDefaultTreePreview, createTreePreviewPropertyCheckboxes, createTreePreviewPropertyButtons } from './dom/dom'
 import { CMEditorView } from './codemirror/cm-view'
-import { editorListener, treePreviewPropertyCheckboxListener } from './utils/event'
+import { editorListener, treePreviewPropertyCheckboxListener, treePreviewPropertyButtonListener } from './utils/event'
 
 import './styles/style.css'
 
@@ -14,6 +14,9 @@ function main(): void {
     //create tree preview property checkboxes
     createTreePreviewPropertyCheckboxes();
 
+    //create tree preview property buttons
+    createTreePreviewPropertyButtons();
+    
     //create default tree preview
     createDefaultTreePreview(true, false, false);
 
@@ -22,5 +25,8 @@ function main(): void {
     
     //tree preview property checkbox listener
     treePreviewPropertyCheckboxListener();
+
+    //tree preview property button listener
+    treePreviewPropertyButtonListener();
 }
 main();

@@ -63,6 +63,7 @@ const editorDebounce = debounce(() => {
     }
 }, 500);
 
+//editor listener
 export function editorListener(): void {    
     (document.getElementById('editor-container-left') as HTMLElement).addEventListener('keyup', editorDebounce);
 }
@@ -79,6 +80,8 @@ export function treePreviewPropertyCheckboxListener(): void {
                 //remove not-checked attribute
                 el.removeAttribute('not-checked');
 
+                el.checked = true;
+
                 //show default tree preview 
                 if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && ((document.getElementById('tree-preview-content') as HTMLElement) === null)) {
                     createDefaultTreePreview(true, false, false);
@@ -87,14 +90,21 @@ export function treePreviewPropertyCheckboxListener(): void {
                 el.setAttribute("not-checked", "");
 
                 el.removeAttribute("checked");
-            }
 
-            if(el.classList.contains('children-input-target')) {
+                el.checked = false;
+
+                //create default tree preview 
+                createDefaultTreePreview(true, false, false);
+            }
+            
+            if(el.classList.contains('children-input-target') && (document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
                 console.log("children");
 
                 if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
-                    el.setAttribute("not-checked", "");
-                    el.removeAttribute('checked');
+                    (document.querySelector('.position-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.position-input-target') as HTMLElement).removeAttribute('checked');
+
+                    (document.querySelector('.position-input-target') as HTMLInputElement).checked = false;
                 }
 
                 //dispose editor listener
@@ -117,12 +127,14 @@ export function treePreviewPropertyCheckboxListener(): void {
                     //invoke editor listener
                     editorListener();
                 }
-            } else if(el.classList.contains('position-input-target')) {
+            } else if(el.classList.contains('position-input-target') && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
                 console.log("position");
 
                 if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
-                    el.setAttribute("not-checked", "");
-                    el.removeAttribute('checked');
+                    (document.querySelector('.children-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.children-input-target') as HTMLElement).removeAttribute('checked');
+
+                    (document.querySelector('.children-input-target') as HTMLInputElement).checked = false;
                 }
 
                 evt.dispose(
@@ -144,4 +156,39 @@ export function treePreviewPropertyCheckboxListener(): void {
             }
         })
     });
+}
+
+export function treePreviewPropertyButtonListener(): void {
+    ((document.getElementById('reset-preview-tree') as HTMLElement)).addEventListener('click', () => {
+        console.log("reset preview tree");
+
+        //logic to reset tree to default:
+        //create default tree preview
+        //dispose editor event
+        //invoke editor listener 
+        //uncheck all input elements if they were checked
+
+        createDefaultTreePreview(true, false, false);
+        
+        evt.dispose(
+            (document.getElementById('editor-container-left') as HTMLElement), 
+            "keyup", 
+            editorDebounce, 
+            undefined, 
+            "disposed editor listener"
+        );
+
+        editorListener();
+
+        //if children input has checked attribute
+        if((document.getElementById('children-input') as HTMLElement).hasAttribute("checked")) {
+            //set check attribute to false 
+            (document.getElementById('children-input') as HTMLInputElement).checked = false;
+        //if position input has checked attribute
+        } else if((document.getElementById('position-input') as HTMLElement).hasAttribute("checked")) {
+            ((document.getElementById('position-input') as HTMLInputElement)).checked = false;
+        } else {
+            return;
+        }
+    })
 }

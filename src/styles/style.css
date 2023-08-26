@@ -45,6 +45,12 @@ body {
     border: 1px solid rgb(202, 201, 201);
 }
 
+#tree-property-container {
+    margin-left: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 #tree-preview-container-right {
     position: fixed;
     width: calc(100% - 50%);
@@ -54,7 +60,10 @@ body {
     overflow-x: scroll;
     font-size: 20px;
     border: 1px solid rgb(202, 201, 201);
-    padding-top: 20px;
+}
+
+#tree-preview-content {
+    padding-bottom: 200px;
 }
 
 .cm-editor {
@@ -73,5 +82,14 @@ input {
 label {
     user-select: none;
     padding-left: 5px;
+    font-size: 17px;
+}
+
+#reset-preview-tree {
+    user-select: none;
+    /*padding-left: 5px;*/
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-left: 15px;
     font-size: 17px;
 }

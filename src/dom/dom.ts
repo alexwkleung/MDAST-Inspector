@@ -1,6 +1,5 @@
 import { mdastFromMarkdown } from "../utils/parser"
 import { CMEditorView } from "../codemirror/cm-view"
-import { visit } from 'unist-util-visit'
 
 export function createInitDOM(): void {
     //main container
@@ -45,6 +44,11 @@ export function createInitDOM(): void {
     treePreviewContainer.setAttribute("id", "tree-preview-container-right");
     mainContainer.appendChild(treePreviewContainer);
 
+    //tree property container
+    const treePropertyContainer: HTMLDivElement = document.createElement('div');
+    treePropertyContainer.setAttribute("id", "tree-property-container");
+    mainContainer.insertBefore(treePropertyContainer, treePreviewContainer);
+
     //tree preview content container
     const treePreviewContentContainer: HTMLDivElement = document.createElement('div');
     treePreviewContentContainer.setAttribute("id", "tree-preview-content-container");
@@ -60,7 +64,7 @@ export function createInitDOM(): void {
  */
 export function createDefaultTreePreview(showDefaultTree: boolean, showChildren: boolean, showPosition: boolean): void {
     //check if tree preview node exists
-    if((document.getElementById('tree-preview-content') as HTMLElement)) {
+    if((document.getElementById('tree-preview-content') as HTMLElement) !== null) {
         //remove node
         (document.getElementById('tree-preview-content') as HTMLElement).remove();
     }
@@ -111,11 +115,6 @@ export function createDefaultTreePreview(showDefaultTree: boolean, showChildren:
         treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
         treeCode.appendChild(treeTextNode);
     }
-
-    //temp (remove later)
-    visit(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), (node, index, parent) => {
-        console.log([node ? node.value : index, parent ? parent.type : index]);
-    })
 }
 
 export function createTreePreviewPropertyCheckboxes(): void {
@@ -124,7 +123,7 @@ export function createTreePreviewPropertyCheckboxes(): void {
     childrenLabel.setAttribute("for", "children-input");
     childrenLabel.setAttribute("id", "children-label");
     childrenLabel.textContent = "Show children nodes";
-    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(childrenLabel, (document.getElementById('tree-preview-container-right') as HTMLElement).firstChild);
+    (document.getElementById('tree-property-container') as HTMLElement).appendChild(childrenLabel);
 
     //children input 
     const childrenInput: HTMLInputElement = document.createElement('input');
@@ -133,14 +132,16 @@ export function createTreePreviewPropertyCheckboxes(): void {
     childrenInput.setAttribute("class", "children-input-target");
     childrenInput.setAttribute("name", "children-checkbox");
     childrenInput.setAttribute("not-checked", "");
-    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(childrenInput, childrenLabel);
+    childrenInput.checked = false;
+    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(childrenInput, (document.getElementById('tree-property-container') as HTMLElement).firstChild);
 
     //position label
     const positionLabel: HTMLLabelElement = document.createElement('label');
     positionLabel.setAttribute("for", "position-input");
     positionLabel.setAttribute("id", "position-label");
     positionLabel.textContent = "Show position of children nodes";
-    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionLabel, (document.getElementById('tree-preview-content-container') as HTMLElement));
+    (document.getElementById('tree-property-container') as HTMLElement).appendChild(positionLabel);
+    //(document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionLabel, (document.getElementById('tree-preview-content-container') as HTMLElement));
 
     //position input
     const positionInput: HTMLInputElement = document.createElement('input');
@@ -149,5 +150,14 @@ export function createTreePreviewPropertyCheckboxes(): void {
     positionInput.setAttribute("class", "position-input-target");
     positionInput.setAttribute("name", "position-checkbox");
     positionInput.setAttribute("not-checked", "");
-    (document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionInput, positionLabel);
+    positionInput.checked = false;
+    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(positionInput, positionLabel);
+}
+
+export function createTreePreviewPropertyButtons(): void {
+    //reset preview tree button
+    const resetPreviewTree: HTMLButtonElement = document.createElement('button');
+    resetPreviewTree.setAttribute("id", "reset-preview-tree");
+    resetPreviewTree.textContent = "Reset tree";
+    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(resetPreviewTree, ((document.getElementById('children-input') as HTMLElement)));
 }
