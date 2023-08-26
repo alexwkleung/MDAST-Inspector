@@ -24,4 +24,4 @@ npm run dev
 
 # License
 
-[MIT License.](https://github.com/alexwkleung/Markdown-MDAST-Inspector/blob/main/LICENSE)
+[MIT License.](https://github.com/alexwkleung/MDAST-Inspector/blob/main/LICENSE)
