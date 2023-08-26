@@ -80,6 +80,7 @@ export function treePreviewPropertyCheckboxListener(): void {
                 //remove not-checked attribute
                 el.removeAttribute('not-checked');
 
+                //set checked state
                 el.checked = true;
 
                 //show default tree preview 
@@ -182,10 +183,19 @@ export function treePreviewPropertyButtonListener(): void {
 
         //if children input has checked attribute
         if((document.getElementById('children-input') as HTMLElement).hasAttribute("checked")) {
-            //set check attribute to false 
+            //remove checked attribute
+            (document.querySelector('.children-input-target') as HTMLElement).removeAttribute("checked");
+
+            //set not-checked attribute
+            (document.querySelector('.children-input-target') as HTMLElement).setAttribute("not-checked", "");
+
+            //set check state to false 
             (document.getElementById('children-input') as HTMLInputElement).checked = false;
         //if position input has checked attribute
         } else if((document.getElementById('position-input') as HTMLElement).hasAttribute("checked")) {
+            (document.querySelector('.position-input-target') as HTMLElement).removeAttribute("checked");
+            (document.querySelector('.position-input-target') as HTMLElement).setAttribute("not-checked", "");
+
             ((document.getElementById('position-input') as HTMLInputElement)).checked = false;
         } else {
             return;
