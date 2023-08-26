@@ -14,7 +14,7 @@ export function createInitDOM(): void {
     //main title
     const mainTitle: HTMLHeadElement = document.createElement('h1');
     mainTitle.setAttribute("class", "main-heading");
-    const mainTitleTextNode: Text = document.createTextNode("Markdown MDAST Inspector");
+    const mainTitleTextNode: Text = document.createTextNode("MDAST Inspector");
     mainTitle.appendChild(mainTitleTextNode);
     mainTop.appendChild(mainTitle);
 
@@ -26,7 +26,7 @@ export function createInitDOM(): void {
     //github link anchor
     const githubLinkAnchor: HTMLAnchorElement = document.createElement('a');
     githubLinkAnchor.setAttribute("id", "github-link");
-    githubLinkAnchor.setAttribute("href", "https://github.com/alexwkleung/Markdown-MDAST-Inspector");
+    githubLinkAnchor.setAttribute("href", "https://github.com/alexwkleung/MDAST-Inspector");
     
     //github link text node
     const githubLinkTextNode: Text = document.createTextNode("GitHub Repo");
