@@ -98,6 +98,7 @@ export function treePreviewPropertyCheckboxListener(): void {
                 createDefaultTreePreview(true, false, false);
             }
             
+            //children input
             if(el.classList.contains('children-input-target') && (document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
                 console.log("children");
 
@@ -128,6 +129,7 @@ export function treePreviewPropertyCheckboxListener(): void {
                     //invoke editor listener
                     editorListener();
                 }
+            //position input
             } else if(el.classList.contains('position-input-target') && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
                 console.log("position");
 
