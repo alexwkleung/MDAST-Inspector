@@ -60,9 +60,10 @@ export function createInitDOM(): void {
  * 
  * @param showDefaultTree Option to show default tree only
  * @param showChildren Option to show children nodes only
- * @param showPosition Option to show position of children nodes only
+ * @param showChildrenPosition Option to show position of children nodes only
+ * @param showDocumentLinePosition Option to show position of document line only
  */
-export function createDefaultTreePreview(showDefaultTree: boolean, showChildren: boolean, showPosition: boolean): void {
+export function createDefaultTreePreview(showDefaultTree: boolean, showChildren: boolean, showChildrenPosition: boolean, showDocumentLinePosition: boolean): void {
     //check if tree preview node exists
     if((document.getElementById('tree-preview-content') as HTMLElement) !== null) {
         //remove node
@@ -88,24 +89,30 @@ export function createDefaultTreePreview(showDefaultTree: boolean, showChildren:
     let treeTextNode: Text;
 
     //when showDefault is true only
-    if(showDefaultTree && !showChildren && !showPosition) {
+    if(showDefaultTree && !showChildren && !showChildrenPosition && !showDocumentLinePosition) {
         treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
         treeCode.appendChild(treeTextNode);
     //when showChildren is true only
-    } else if(!showDefaultTree && showChildren && !showPosition) {
+    } else if(!showDefaultTree && showChildren && !showChildrenPosition && !showDocumentLinePosition) {
         treeTextNode = document.createTextNode(JSON.stringify((JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).children), null, 2));
         treeCode.appendChild(treeTextNode);
-    //when showPosition is true only
-    } else if(!showDefaultTree && !showChildren && showPosition) {
+    //when showChildrenPosition is true only
+    } else if(!showDefaultTree && !showChildren && showChildrenPosition && !showDocumentLinePosition) {
+        //fix this!
+        //
         treeTextNode = document.createTextNode(JSON.stringify((JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).position), null, 2));
         treeCode.appendChild(treeTextNode);
-    //when showDefaultTree, showChildren, and showPosition is true
-    } else if(showDefaultTree && showChildren && showPosition) {
+    //when showDocumentLinePosition is true only
+    } else if(!showDefaultTree && !showChildren && !showChildrenPosition && showDocumentLinePosition) {
+        treeTextNode = document.createTextNode(JSON.stringify((JSON.parse(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2)).position), null, 2));
+        treeCode.appendChild(treeTextNode);
+    //when showDefaultTree, showChildren, and showChildrenPosition is true
+    } else if(showDefaultTree && showChildren && showChildrenPosition && showDocumentLinePosition) {
         //assign default parsed mdast string 
         treeTextNode = document.createTextNode(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
         treeCode.appendChild(treeTextNode);
-    //when showDefaultTree, showChildren, and showPosition are false
-    } else if(!showDefaultTree && !showChildren && !showPosition) {
+    //when showDefaultTree, showChildren, showChildrenPosition, and showDocumentLinePosition are false
+    } else if(!showDefaultTree && !showChildren && !showChildrenPosition && !showDocumentLinePosition) {
         //assign empty string
         treeTextNode = document.createTextNode("");
         treeCode.appendChild(treeTextNode);
@@ -135,23 +142,39 @@ export function createTreePreviewPropertyCheckboxes(): void {
     childrenInput.checked = false;
     (document.getElementById('tree-property-container') as HTMLElement).insertBefore(childrenInput, (document.getElementById('tree-property-container') as HTMLElement).firstChild);
 
-    //position label
-    const positionLabel: HTMLLabelElement = document.createElement('label');
-    positionLabel.setAttribute("for", "position-input");
-    positionLabel.setAttribute("id", "position-label");
-    positionLabel.textContent = "Show position of children nodes";
-    (document.getElementById('tree-property-container') as HTMLElement).appendChild(positionLabel);
-    //(document.getElementById('tree-preview-container-right') as HTMLElement).insertBefore(positionLabel, (document.getElementById('tree-preview-content-container') as HTMLElement));
+    //children position label
+    const childrenPositionLabel: HTMLLabelElement = document.createElement('label');
+    childrenPositionLabel.setAttribute("for", "children-position-input");
+    childrenPositionLabel.setAttribute("id", "children-position-label");
+    childrenPositionLabel.textContent = "Show position of children nodes";
+    (document.getElementById('tree-property-container') as HTMLElement).appendChild(childrenPositionLabel);
 
-    //position input
-    const positionInput: HTMLInputElement = document.createElement('input');
-    positionInput.setAttribute("type", "checkbox");
-    positionInput.setAttribute("id", "position-input");
-    positionInput.setAttribute("class", "position-input-target");
-    positionInput.setAttribute("name", "position-checkbox");
-    positionInput.setAttribute("not-checked", "");
-    positionInput.checked = false;
-    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(positionInput, positionLabel);
+    //children position input
+    const childrenPositionInput: HTMLInputElement = document.createElement('input');
+    childrenPositionInput.setAttribute("type", "checkbox");
+    childrenPositionInput.setAttribute("id", "children-position-input");
+    childrenPositionInput.setAttribute("class", "children-position-input-target");
+    childrenPositionInput.setAttribute("name", "children-position-checkbox");
+    childrenPositionInput.setAttribute("not-checked", "");
+    childrenPositionInput.checked = false;
+    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(childrenPositionInput, childrenPositionLabel);
+
+    //document line position label
+    const documentLinePositionLabel: HTMLLabelElement = document.createElement('label');
+    documentLinePositionLabel.setAttribute("for", "document-line-position-input");
+    documentLinePositionLabel.setAttribute("id", "document-line-position-label");
+    documentLinePositionLabel.textContent = "Show position of document line nodes";
+    (document.getElementById('tree-property-container') as HTMLElement).appendChild(documentLinePositionLabel);
+
+    //document line position input
+    const documentLinePositionInput: HTMLInputElement = document.createElement('input');
+    documentLinePositionInput.setAttribute("type", "checkbox");
+    documentLinePositionInput.setAttribute("id", "document-line-position-input");
+    documentLinePositionInput.setAttribute("class", "document-line-position-input-target");
+    documentLinePositionInput.setAttribute("name", "document-line-position-checkbox");
+    documentLinePositionInput.setAttribute("not-checked", "");
+    documentLinePositionInput.checked = false;
+    (document.getElementById('tree-property-container') as HTMLElement).insertBefore(documentLinePositionInput, documentLinePositionLabel);
 }
 
 export function createTreePreviewPropertyButtons(): void {

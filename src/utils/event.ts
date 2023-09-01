@@ -38,14 +38,14 @@ const editorDebounce = debounce(() => {
         //if children input is checked
         if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
             //create children tree
-            createDefaultTreePreview(false, true, false);
+            createDefaultTreePreview(false, true, false, false);
         //if position input is checked
-        } else if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
+        } else if((document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("checked")) {
             //create position tree
-            createDefaultTreePreview(false, false, true);
+            createDefaultTreePreview(false, false, true, false);
         //else just create default tree
         } else {
-            createDefaultTreePreview(true, false, false);
+            createDefaultTreePreview(true, false, false, false);
         }
 
         //console.log(JSON.stringify(mdastFromMarkdown(CMEditorView.editorView.state.doc.toString()), null, 2));
@@ -54,11 +54,11 @@ const editorDebounce = debounce(() => {
         (document.getElementById('tree-preview-content-container') as HTMLElement).removeChild((document.getElementById('tree-preview-content') as HTMLElement));
 
         if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
-            createDefaultTreePreview(false, true, false);
-        } else if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
-            createDefaultTreePreview(false, false, true);
+            createDefaultTreePreview(false, true, false, false);
+        } else if((document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("checked")) {
+            createDefaultTreePreview(false, false, true, false);
         } else {
-            createDefaultTreePreview(true, false, false);
+            createDefaultTreePreview(true, false, false, false);
         }
     }
 }, 500);
@@ -85,7 +85,7 @@ export function treePreviewPropertyCheckboxListener(): void {
 
                 //show default tree preview 
                 if((document.getElementById('tree-preview-content-container') as HTMLElement) !== null && ((document.getElementById('tree-preview-content') as HTMLElement) === null)) {
-                    createDefaultTreePreview(true, false, false);
+                    createDefaultTreePreview(true, false, false, false);
                 }
             } else if(el.hasAttribute('checked')) {
                 el.setAttribute("not-checked", "");
@@ -95,67 +95,79 @@ export function treePreviewPropertyCheckboxListener(): void {
                 el.checked = false;
 
                 //create default tree preview 
-                createDefaultTreePreview(true, false, false);
+                createDefaultTreePreview(true, false, false, false);
             }
             
             //children input
             if(el.classList.contains('children-input-target') && (document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
                 console.log("children");
 
-                if((document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
-                    (document.querySelector('.position-input-target') as HTMLElement).setAttribute("not-checked", "");
-                    (document.querySelector('.position-input-target') as HTMLElement).removeAttribute('checked');
+                if((document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                    (document.querySelector('.children-position-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.children-position-input-target') as HTMLElement).removeAttribute('checked');
 
-                    (document.querySelector('.position-input-target') as HTMLInputElement).checked = false;
+                    (document.querySelector('.children-position-input-target') as HTMLInputElement).checked = false;
+                } else if((document.querySelector('.document-line-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                    (document.querySelector('.document-line-position-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.document-line-position-input-target') as HTMLElement).removeAttribute("checked");
+
+                    (document.querySelector('.document-line-position-input-target') as HTMLInputElement).checked = false;
                 }
-
-                //dispose editor listener
-                evt.dispose(
-                    (document.getElementById('editor-container-left') as HTMLElement), 
-                    "keyup", 
-                    editorDebounce, 
-                    undefined, 
-                    "disposed editor listener"
-                );
 
                 //create children tree
-                createDefaultTreePreview(false, true, false);
-
-                //invoke editor listener after dispose
-                editorListener();
-
-                //if children and position input are not checked
-                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("not-checked")) {
-                    //invoke editor listener
-                    editorListener();
-                }
-            //position input
-            } else if(el.classList.contains('position-input-target') && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("checked")) {
-                console.log("position");
+                createDefaultTreePreview(false, true, false, false);
+            //children position input
+            } else if(el.classList.contains('children-position-input-target') && (document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                console.log("children position");
 
                 if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
                     (document.querySelector('.children-input-target') as HTMLElement).setAttribute("not-checked", "");
                     (document.querySelector('.children-input-target') as HTMLElement).removeAttribute('checked');
 
                     (document.querySelector('.children-input-target') as HTMLInputElement).checked = false;
+                } else if((document.querySelector('.document-line-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                    (document.querySelector('.document-line-position-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.document-line-position-input-target') as HTMLElement).removeAttribute("checked");
+                    
+                    (document.querySelector('.document-line-position-input-target') as HTMLInputElement).checked = false;
                 }
 
-                evt.dispose(
-                    (document.getElementById('editor-container-left') as HTMLElement), 
-                    "keyup", 
-                    editorDebounce, 
-                    undefined, 
-                    "disposed editor listener"
-                );  
+                //create children position tree
+                createDefaultTreePreview(false, false, true, false);
+            //document line position input
+            } else if(el.classList.contains('document-line-position-input-target') && (document.querySelector('.document-line-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                console.log("document line position");
 
-                //create position tree
-                createDefaultTreePreview(false, false, true);
+                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("checked")) {
+                    (document.querySelector('.children-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.children-input-target') as HTMLElement).removeAttribute("checked");
 
+                    (document.querySelector('.children-input-target') as HTMLInputElement).checked = false;
+                } else if((document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("checked")) {
+                    (document.querySelector('.children-position-input-target') as HTMLElement).setAttribute("not-checked", "");
+                    (document.querySelector('.children-position-input-target') as HTMLElement).removeAttribute('checked');
+
+                    (document.querySelector('.children-position-input-target') as HTMLInputElement).checked = false;
+                }
+
+                createDefaultTreePreview(false, false, false, true);
+            }
+
+            //dispose editor listener
+            evt.dispose(
+                (document.getElementById('editor-container-left') as HTMLElement), 
+                "keyup", 
+                editorDebounce, 
+                undefined, 
+                "disposed editor listener"
+            );  
+
+            //invoke editor listener
+            editorListener();
+
+            //if all checkboxes aren't checked
+            if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.children-position-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.document-line-position-input-target') as HTMLElement)) {
                 editorListener();
-
-                if((document.querySelector('.children-input-target') as HTMLElement).hasAttribute("not-checked") && (document.querySelector('.position-input-target') as HTMLElement).hasAttribute("not-checked")) {
-                    editorListener();
-                }
             }
         })
     });
@@ -171,7 +183,7 @@ export function treePreviewPropertyButtonListener(): void {
         //invoke editor listener 
         //uncheck all input elements if they were checked
 
-        createDefaultTreePreview(true, false, false);
+        createDefaultTreePreview(true, false, false, false);
         
         evt.dispose(
             (document.getElementById('editor-container-left') as HTMLElement), 
@@ -193,12 +205,17 @@ export function treePreviewPropertyButtonListener(): void {
 
             //set check state to false 
             (document.getElementById('children-input') as HTMLInputElement).checked = false;
-        //if position input has checked attribute
-        } else if((document.getElementById('position-input') as HTMLElement).hasAttribute("checked")) {
-            (document.querySelector('.position-input-target') as HTMLElement).removeAttribute("checked");
-            (document.querySelector('.position-input-target') as HTMLElement).setAttribute("not-checked", "");
+        //if children position input has checked attribute
+        } else if((document.getElementById('children-position-input') as HTMLElement).hasAttribute("checked")) {
+            (document.querySelector('.children-position-input-target') as HTMLElement).removeAttribute("checked");
+            (document.querySelector('.children-position-input-target') as HTMLElement).setAttribute("not-checked", "");
 
-            ((document.getElementById('position-input') as HTMLInputElement)).checked = false;
+            ((document.getElementById('children-position-input') as HTMLInputElement)).checked = false;
+        } else if((document.getElementById('document-line-position-input') as HTMLElement).hasAttribute("checked")) {
+            (document.querySelector('.document-line-position-input-target') as HTMLElement).removeAttribute("checked");
+            (document.querySelector('.document-line-position-input-target') as HTMLElement).setAttribute("not-checked", "");
+
+            (document.getElementById('document-line-position-input') as HTMLInputElement).checked = false;
         } else {
             return;
         }

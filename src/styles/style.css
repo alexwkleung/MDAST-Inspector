@@ -46,6 +46,7 @@ body {
 }
 
 #tree-property-container {
+    display: flex;
     margin-left: 50%;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -83,6 +84,7 @@ label {
     user-select: none;
     padding-left: 5px;
     font-size: 17px;
+    margin-top: 5px;
 }
 
 #reset-preview-tree {
