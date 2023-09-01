@@ -18,7 +18,7 @@ function main(): void {
     createTreePreviewPropertyButtons();
     
     //create default tree preview
-    createDefaultTreePreview(true, false, false);
+    createDefaultTreePreview(true, false, false, false);
 
     //editor listener
     editorListener();
